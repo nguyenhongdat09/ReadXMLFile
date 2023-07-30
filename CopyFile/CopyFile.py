@@ -13,6 +13,7 @@ class copyFile():
         # Create file and not make error if folder exists
         os.makedirs(self.path_project, exist_ok=True)
         if not os.path.isfile(path_file_copy):
+            print(f"Không tìm thấy file trong đường dẫn: {path_file_copy} ")
             return
         folder_copy = os.path.dirname(path_file_copy)
         index_folder = os.path.dirname(path_file_copy).find(r'\Controllers')
