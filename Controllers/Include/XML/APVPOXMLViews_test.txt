@@ -1,0 +1,7 @@
+﻿<item value="110--1001--1100: [ngay_ct3].Label, [ngay_ct3], [so_hd1].Label, [so_hd1], [status].Label, [status]"/>
+<item value="1100000000-11-11: [dien_giai].Label, [dien_giai], [cookie], [stt_rec], [ma_dvcs], [ngay_ct]"/>
+
+<item value="1110-1001: [ma_nv].Label, [ma_nv], [ten_nvmh%l], [ngay_hd1].Label, [ngay_hd1]"/>
+<item value="1110010011: [nguoi_duyet].Label, [nguoi_duyet], [comment], [ngay_hl1].Label, [ngay_hl1], [user_id3]"/>
+<item value="111001001: [u_status].Label, [u_status], [u_status_name%l], [status1].Label, [status1]"/>
+<item value="111000000: [kieu_duyet].Label, [kieu_duyet], [ten_kieu%l]"/>

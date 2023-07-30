@@ -4,10 +4,13 @@ import re
 import pandas as pd
 import threading
 from Constant.constant import Constant as ct
+
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_colwidth', None)
 pd.set_option('display.width', None)
+
+
 class readFile():
     def __init__(self, path_root):
         self.path_root = path_root
@@ -28,6 +31,7 @@ class readFile():
             else:
                 print("Invalid path. The 'Controllers' folder does not exist.")
                 return None
+
     def list_entity(self, text):
         matches = self.entity_pattern.findall(text)
         controllers_path = self.cut_to_controllers()
@@ -35,7 +39,7 @@ class readFile():
             return [], []
         list_invalid, list_valid = [], []
         for entity_name, entity_value in matches:
-            file = controllers_path + "\\"  + re.sub(r"\.\.\\", "", entity_value)
+            file = controllers_path + "\\" + re.sub(r"\.\.\\", "", entity_value)
             if not os.path.exists(file):
                 list_invalid.append(file)
             else:
@@ -62,23 +66,33 @@ class readFile():
             threads = []
             for file_path in list_valid:
                 # readXml(file_path)
-                thread = threading.Thread(target= self.readXml, args=(file_path,))
+                thread = threading.Thread(target=self.readXml, args=(file_path,))
                 threads.append(thread)
                 thread.start()
             for thread in threads:
                 thread.join()
+
     def file_to_df(self):
         if len(self.file_hop_le) == 0 & len(self.file_khong_hop_le) == 0:
             return pd.DataFrame(), pd.DataFrame()
-        lst_stt_dong = list(range(1, max(len(self.file_khong_hop_le), len(self.file_hop_le)) + 1 ))
-        if not len(self.file_khong_hop_le) == max(lst_stt_dong):
-            self.file_khong_hop_le += [None] * (max(lst_stt_dong) - len(self.file_khong_hop_le))
-        if not len(self.file_hop_le) == max(lst_stt_dong):
-            self.file_hop_le += [None] * (max(lst_stt_dong) - len(self.file_hop_le))
-        dict_file ={
+        lst_stt_dong = list(range(1, max(len(self.file_khong_hop_le), len(self.file_hop_le)) + 1))
+
+        file_khl, file_hl = self.file_khong_hop_le.copy(), self.file_hop_le.copy()
+
+        if not len(file_khl) == max(lst_stt_dong):
+            file_khl += [None] * (max(lst_stt_dong) - len(file_khl))
+        if not len(file_hl) == max(lst_stt_dong):
+            file_hl += [None] * (max(lst_stt_dong) - len(file_hl))
+
+        dict_file = {
             "stt": lst_stt_dong,
-            "file_hop_le": [x for x in self.file_hop_le],
+            "file_hop_le": [x for x in file_hl],
+            "file_khong_hop_le": [x for x in file_khl]
+        }
+        dict_file_khl = {
+            "stt": list(range(1, len(self.file_khong_hop_le) + 1)),
             "file_khong_hop_le": [x for x in self.file_khong_hop_le]
         }
+
         df = pd.DataFrame(dict_file)
-        return df
+        return df, pd.DataFrame(dict_file_khl)
