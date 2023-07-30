@@ -3,7 +3,7 @@ import shutil
 class copyFile():
     def __init__(self, path_root_to_copy):
         self.path_root_to_copy = path_root_to_copy
-        self.path_project = os.path.dirname(os.getcwd()) + '\Controllers'
+        self.path_project = os.getcwd() + '\Controllers'
     def get_controllers_path(self):
         if self.path_root_to_copy.find(r'\Controllers') > 0:
             return self.path_root_to_copy[: self.path_root_to_copy.find(r'\Controllers') + len(r'\Controllers')]
@@ -20,8 +20,12 @@ class copyFile():
         destination_folder =self.path_project + path_file_to_find
         if not os.path.exists(destination_folder):
             os.makedirs(destination_folder)
-        print("Copy: " , path_file_copy)
-        print("Paster: " ,destination_folder)
+        if not os.path.exists(destination_folder):
+            print("Not exists: ", destination_folder)
+            return
+        if not os.path.exists(path_file_copy):
+            print("Not exists: ", path_file_copy)
+            return
         shutil.copy(path_file_copy, destination_folder)
     def exeute_copy(self, arr_path):
         if len(arr_path) <= 0:
