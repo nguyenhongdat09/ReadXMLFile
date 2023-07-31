@@ -65,7 +65,6 @@ class readFile():
             self.file_hop_le.extend(list_valid)
             threads = []
             for file_path in list_valid:
-                # readXml(file_path)
                 thread = threading.Thread(target=self.readXml, args=(file_path,))
                 threads.append(thread)
                 thread.start()
