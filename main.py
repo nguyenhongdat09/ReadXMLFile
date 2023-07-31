@@ -1,7 +1,5 @@
 from Read.ReadFile import readFile as rd
 from CopyFile.CopyFile import copyFile
-import openpyxl
-
 # path = r'\\172.168.5.14\CustomerPro\FBO\PBBinhDien\SP2264\App_Data\Controllers\Dir\InputInvoice - Copy.xml'
 
 copy_yn = '0'
