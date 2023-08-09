@@ -1,0 +1,17 @@
+﻿<field name="ticket" readOnly="true" external="true" defaultValue="''" hidden="true" categoryIndex="&MediaTabIndex;" filterSource="Vacant">
+  <header v="" e=""></header>
+</field>
+<field name="imageurl" readOnly="true" external="true" defaultValue="''" hidden="true" categoryIndex="&MediaTabIndex;" filterSource="Vacant">
+  <header v="" e=""></header>
+</field>
+<field name="image" readOnly="true" external="true" defaultValue="''" hidden="true" inactivate="true" categoryIndex="&MediaTabIndex;">
+  <header v="" e=""></header>
+  <footer v="&lt;div style=&quot;margin-left:4px;background-color:#e1edfb;position:fixed;width:360px;height:240px;text-align:center;vertical-align:middle;&quot;&gt; &lt;img id=&quot;itemImage&quot; src=&quot;&quot; style=&quot;max-width:360px;max-height:240px;margin:auto;position:absolute;top:0;left:0;right:0;bottom:0;&quot; /&gt;&lt;/div&gt;" e="&lt;div style=&quot;margin-left:4px;background-color:#e1edfb;position:fixed;width:360px;height:240px;text-align:center;vertical-align:middle;&quot;&gt; &lt;img id=&quot;itemImage&quot; src=&quot;&quot; style=&quot;max-width:360px;max-height:240px;margin:auto;position:absolute;top:0;left:0;right:0;bottom:0;&quot; /&gt;&lt;/div&gt;"></footer>
+</field>
+<field name="upload" readOnly="true" external="true" defaultValue="''" disabled="true" inactivate="true" categoryIndex="&MediaTabIndex;" filterSource="Plugin">
+  <header v="" e=""></header>
+  <footer v="&lt;iframe id=&quot;imageIFrame&quot; name=&quot;imageIFrame&quot; style=&quot;display:none;bottom:280px;width:0px;height:0px&quot; src=&quot;about:blank&quot;&gt;&lt;/iframe&gt;&lt;form id=&quot;uploadForm&quot; method=&quot;post&quot; target=&quot;imageIFrame&quot; enctype=&quot;multipart/form-data&quot;&gt;&lt;div class=&quot;&MediaController;UploadSelect&quot;&gt;&lt;div align=&quot;center&quot; class=&quot;&MediaController;UploadButton&quot; &gt;Chọn...&lt;/div&gt;&lt;input type=&quot;file&quot; title=&quot;Chọn tệp&quot; name=&quot;imageupload&quot; id=&quot;imageupload&quot; tabIndex=&quot;999&quot; class=&quot;&MediaController;UploadInput&quot; /&gt;&lt;/div&gt;&lt;/form&gt;" e="&lt;iframe id=&quot;imageIFrame&quot; name=&quot;imageIFrame&quot; style=&quot;display: none; position: absolute; width: 0px; height: 0px&quot; src=&quot;about:blank&quot;&gt;&lt;/iframe&gt;&lt;form id=&quot;uploadForm&quot; method=&quot;post&quot; target=&quot;imageIFrame&quot; enctype=&quot;multipart/form-data&quot;&gt;&lt;div class=&quot;&MediaController;UploadSelect&quot;&gt;&lt;div align=&quot;center&quot; class=&quot;&MediaController;UploadButton&quot; &gt;Select...&lt;/div&gt;&lt;input type=&quot;file&quot; name=&quot;imageupload&quot; id=&quot;imageupload&quot; tabIndex=&quot;999&quot; class=&quot;&MediaController;UploadInput&quot; /&gt;&lt;/div&gt;&lt;/form&gt;"></footer>
+</field>
+<field name="rkey" readOnly="true" external="true" defaultValue="''" hidden="true" allowContain="true" categoryIndex="&MediaTabIndex;">
+  <header v="" e=""></header>
+</field>

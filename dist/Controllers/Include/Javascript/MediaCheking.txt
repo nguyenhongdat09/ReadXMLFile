@@ -1,0 +1,27 @@
+﻿<![CDATA[
+var w = this;
+if (w._checked) {
+  var field = w.getItem('rkey').field;
+  var imgname = get]]>&Identification;<![CDATA[FileName($get('imageupload').value), allowExt = 'gif,png,jpg,jpeg';
+  var err = (w._language == 'v' ? 'Định dạng tệp ảnh không đúng.' : 'Invalid image format.');
+  if (imgname != '') {
+    var ext = imgname.split('.').pop();
+    if (allowExt.indexOf(ext.toLowerCase()) < 0) {
+      w._checked = false;
+      $message.show(err);
+    }
+    else {
+      var k = w.getItemValue(']]>&MediaKeyField;<![CDATA['), h = w.getItemValue('ticket');
+      var form = $get('uploadForm'), rkey = get]]>&Identification;<![CDATA[RandomKey(32);
+      w.setItemValue('rkey', rkey);
+      form.action = '../AppHandler/Media.ashx?t=upload&c=]]>&MediaController;<![CDATA[&s=]]>&MediaSource;<![CDATA[&k=' + $func.replace(k, '+', String.fromCharCode(255)) + '&h=' + h + '&e=' + rkey;
+      form.submit();
+    }
+    field.FilterSource = '';
+  }
+  else {
+    w.setItemValue('rkey', '');
+    field.FilterSource = 'Ignore';
+  }
+}
+]]>

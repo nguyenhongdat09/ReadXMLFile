@@ -1,0 +1,8 @@
+﻿<![CDATA[
+<%var x = '', y = '', o = this, t = o.instance, i = t._id, c = t._$appCode;
+if (!t._$mediaIndex) t._$mediaIndex = t.findField(']]>&MediaCode;<![CDATA[').Index;
+if (!t._$mediaKey) t._$mediaKey = t.findField(']]>&MediaKey;<![CDATA[').Index;
+var v = o.row[t._$mediaIndex], k = o.row[t._$mediaKey];
+x = (k ? 'style="cursor:pointer;"' : '');
+y = (k ? 'onclick=\'show$FormFullImage(\"' + i + '\",\"' + v + '\",\"' + k + '\",\"' + c + '\",\"]]>&MediaController;<![CDATA[\",\"]]>&MediaSource;<![CDATA[\")\'' : '');
+%><%x%><%y%>]]>

@@ -1,0 +1,5 @@
+﻿  <command>
+    <![CDATA[
+select 'this._$appCode = ''' + code + '''' as value from @@sysDatabaseName..entity where cdata = '@@appDatabaseName'
+    ]]>
+  </command>

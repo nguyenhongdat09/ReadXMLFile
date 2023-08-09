@@ -33,7 +33,8 @@ class readFile():
                 return None
 
     def list_entity(self, text):
-        matches = self.entity_pattern.findall(text)
+        doctype = ct.doctype.findall(text)
+        matches = self.entity_pattern.findall(' '.join(doctype))
         controllers_path = self.cut_to_controllers()
         if controllers_path is None:
             return [], []

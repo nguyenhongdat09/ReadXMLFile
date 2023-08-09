@@ -1,0 +1,47 @@
+﻿<![CDATA[
+function set]]>&Identification;<![CDATA[FormViewMode(f) {
+  var img = $get('itemImage'), f1 = $get('imageupload');
+  var viewMode = (f._action == 'View'), isBlank = (f._action == 'New') ;
+  if (!isBlank) isBlank = ((f.getItemValue('imageurl') == '') && (f.getItemValue('rkey') == ''));
+  f1.value = ''; f1.disabled = viewMode;
+  if(f._action == 'New') img.src = '';
+}
+function reset]]>&Identification;<![CDATA[Ticket(f, v, name) {
+  f.setItemValue('ticket', v);
+  if (name) f.focus(name);
+}
+function load]]>&Identification;<![CDATA[Image(f) {
+  var t = f.getItemValue('ticket');
+  if(t == '') f.setItemValue('ticket', f._ticket);
+  var k = f.getItemValue('id'), src = f.getItemValue('imageurl');
+  var o = $get('itemImage'), b = (f._action == 'New') || (src == '');
+  b ? o.parentNode.innerHTML = '<div id = "itemImage" style="width:358px;max-height:none;overflow:hidden;vertical-align:middle;margin-left:1px;cursor:default;" class="]]>&Identification;<![CDATA[UploadViewBlank"/>' : o.src = src;  
+}
+function on]]>&Identification;<![CDATA[FileSelected(e) {
+  var o = $get('itemImage').parentNode;
+  var h = '<img id="itemImage" style="max-width:360px;max-height:240px;margin:auto;position:absolute;top:0;left:0;right:0;bottom:0;" src="%src%">';
+  if (window.FileReader) {
+    var reader = new FileReader();
+    reader.onload = function(e) { o.innerHTML = h.replace('%src%', e.target.result); }     
+    reader.readAsDataURL(e.target.files[0]);
+  }
+  else o.innerHTML = h.replace('%src%', '../Images/Media.png');
+}
+function set]]>&Identification;<![CDATA[ViewImage(v) {
+  var img = '<img id="view_image" src="' + v + '">';
+  if (!window.FileReader) $get('itemImage').src = v;
+}
+function get]]>&Identification;<![CDATA[FileName(s) {
+  var p = s.lastIndexOf('\\');
+  if (p != -1) {return s.substring(p + 1);}
+  else {return s;}
+}
+function get]]>&Identification;<![CDATA[RandomKey(l) {
+	var s = '', c = '0123456789abcdefghiklmnopqrstuvwxyz';
+	for (var i = 0; i < l; i++) {
+		var r = Math.floor(Math.random() * c.length);
+		s += c.substring(r, r + 1);
+	}
+  return s;
+}
+]]>

@@ -1,0 +1,131 @@
+﻿<!ENTITY % Ignore.Media SYSTEM "..\Include\CompactMode.txt">
+
+<![%Ignore.Media;[
+  <!ENTITY MediaFields "">
+  <!ENTITY MediaViews "">
+  <!ENTITY MediaCategory "">
+  <!ENTITY MediaTab "">
+  <!ENTITY MediaChecking "">
+  <!ENTITY MediaScript "">
+  <!ENTITY MediaScriptActive "">
+  <!ENTITY MediaScriptClose "">
+  <!ENTITY MediaScriptShown "">
+  <!ENTITY MediaScattering "">
+  <!ENTITY MediaCommandInserted "">
+  <!ENTITY MediaCommandUpdated "">
+  <!ENTITY MediaCommandDeleted "">
+  <!ENTITY MediaCommandShowing "">
+  <!ENTITY MediaCommandInitExternal "">
+  <!ENTITY MediaCreateTicketWhenReturn "">
+  <!ENTITY MediaCreateTicket "">
+  <!ENTITY MediaTicket "">
+  <!ENTITY MediaTicketReset "">
+  <!ENTITY MediaCss "">
+
+  <!ENTITY MediaRequireScript "">
+  <!ENTITY MediaRequireCss "">
+  <!ENTITY MediaLockupField "">
+  <!ENTITY MediaLookupCommand "">
+  <!ENTITY MediaLockupScript "">
+]]>
+
+
+
+
+
+<!ENTITY MediaFields SYSTEM "..\Include\XML\MediaFields.txt">
+<!ENTITY MediaViews SYSTEM "..\Include\XML\MediaViews.xml">
+<!ENTITY MediaCategory SYSTEM "..\Include\XML\MediaCategory.xml">
+
+<!ENTITY MediaTab " null,">
+<!ENTITY MediaChecking SYSTEM "..\Include\Javascript\MediaCheking.txt">
+<!ENTITY MediaScript SYSTEM "..\Include\Javascript\MediaScript.txt">
+
+<!ENTITY MediaScriptActive "
+  var p = $get('itemImage').parentNode;
+  p.style.maxHeight = 'none';
+  $addHandler($get('imageupload'), 'change', on&Identification;FileSelected);
+  set&Identification;FormViewMode(f);">
+
+
+
+
+
+<!ENTITY MediaScriptClose "try {$removeHandler($get('imageupload'), 'change', on&Identification;FileSelected);} catch (ex) {}">
+<!ENTITY MediaScriptShown "set&Identification;FormViewMode(f);">
+
+<!ENTITY MediaScattering "reset&Identification;Ticket(this, &quot;' + @ticket + '&quot;);">
+
+<!ENTITY MediaCommandShowing "
+  declare @fileTicket nvarchar(256)
+  select @fileTicket = lower(replace(newid(),'-',''));
+  if @@action = 'New' insert into @@sysDatabaseName..ticket(ticket, user_id, data, datetime0) values(@fileTicket, @@userID, '@@appDatabaseName', getdate());
+  select 'this._ticket = ''' + @fileTicket + ''';load&Identification;Image(this);' as message
+  return">
+
+<!ENTITY MediaCommandInitExternal "
+  if @@action = 'Edit' begin
+    &MediaCreateTicket;
+    declare @rkey varchar(32), @imageUrl varchar(4000), @appCode char(2)
+    select @appCode = code from @@sysDatabaseName..entity where cdata = '@@appDatabaseName'
+    select top 1 @rkey = file_enc from @@appDatabaseName..media where controller = '&MediaController;' and syskey = @&MediaKeyField;  
+    if isnull(@rkey, '') = '' select @imageUrl = ''
+    else select @imageUrl = '../AppHandler/Media.ashx?t=show&amp;c=&MediaController;&amp;s=&MediaSource;&amp;k=' + replace(@&MediaKeyField;, '+', char(255)) + '&amp;r=' + isnull(@rkey, '') + '&amp;d=' + rtrim(@appCode)
+    select @ticket as ticket, isnull(@rkey, '') as rkey, @imageUrl as imageurl
+    return
+  end">
+
+
+<!ENTITY MediaCommandInserted "
+  if (@$rkey &lt;&gt; '') begin
+    declare @appCode char(2), @imageUrl varchar(4000), @rkey char(32)
+    select @appCode = code from @@sysDatabaseName..entity where cdata = '@@appDatabaseName'
+    select top 1 @rkey = file_enc from @@sysDatabaseName..fileinfo where controller = '&MediaController;' and syskey = @&MediaKeyField;
+    select @imageUrl = '../AppHandler/Media.ashx?t=show&amp;c=&MediaController;&amp;s=&MediaSource;&amp;k=' + replace(@&MediaKeyField;, '+', char(255)) + '&amp;r=' + isnull(@rkey, '') + '&amp;d=' + rtrim(@appCode)
+    select '' as message, '' as field, 'Media.Media.Save(&MediaController;,&MediaSource;,' + rtrim(@&MediaKeyField;) + ',@@appDatabaseName,@@userID)' as invoke, 'set&Identification;ViewImage(' + '''' + @imageUrl + ''');' as script, @$rkey as &MediaImageField;
+  end">
+
+<!ENTITY MediaCommandUpdated "
+  if @$rkey &lt;&gt; '' begin
+    declare @appCode char(2), @imageUrl varchar(4000), @rkey char(32)
+    select @appCode = code from @@sysDatabaseName..entity where cdata = '@@appDatabaseName'
+    select top 1 @rkey = file_enc from @@sysDatabaseName..fileinfo where controller = '&MediaController;' and syskey = @&MediaKeyField;
+    select @imageUrl = '../AppHandler/Media.ashx?t=show&amp;c=&MediaController;&amp;s=&MediaSource;&amp;k=' + replace(@&MediaKeyField;, '+', char(255)) + '&amp;r=' + isnull(@rkey, '') + '&amp;d=' + rtrim(@appCode)
+    select '' as message, '' as field, 'Media.Media.Save(&MediaController;,&MediaSource;,' + rtrim(@&MediaKeyField;) + ',@@appDatabaseName,@@userID)' as invoke, 'set&Identification;ViewImage(' + '''' + @imageUrl + ''');' as script, @$rkey as &MediaImageField;
+  end
+  if $&MediaKeyField;.OldValue &lt;&gt; @&MediaKeyField; begin
+    if @$rkey &lt;&gt; '' delete &MediaTable; where controller = '&MediaController;' and &MediaSysField; = $&MediaKeyField;.OldValue
+      else update &MediaTable; set &MediaSysField; = @&MediaKeyField; where controller = '&MediaController;' and &MediaSysField; = $&MediaKeyField;.OldValue
+  end">
+
+<!ENTITY MediaCommandDeleted "select '' as message, 'Media.Media.Delete(&MediaController;,&MediaSource;,' + rtrim(@&MediaKeyField;) + ',@@appDatabaseName)' as invoke">
+<!ENTITY MediaCreateTicketWhenReturn "insert into @@sysDatabaseName..ticket(ticket, user_id, data, datetime0) values(@cticket, @@userID, '@@appDatabaseName', getdate())">
+
+
+
+<!ENTITY MediaCreateTicket "declare @ticket varchar(32)
+  select @ticket = '';select @ticket = lower(replace(newid(),'-',''));
+  insert into @@sysDatabaseName..ticket(ticket, user_id, data, datetime0) values(@ticket, @@userID, '@@appDatabaseName', getdate());">
+<!ENTITY MediaTicket "
+  declare @cticket varchar(32)
+  select @cticket = lower(replace(newid(), '-', ''))">
+<!ENTITY MediaTicketReset ", 'reset&Identification;Ticket(this, &quot;' + @cticket + '&quot;, &quot;&MediaKeyField;&quot;);' as script">
+
+
+
+
+<!ENTITY MediaCss "
+.&Identification;UploadViewBlank {background-color: white;border: thin solid gray;width: 358px;height: 238px;}
+.&Identification;UploadSelect:hover{color:#3171c6;text-decoration:underline}
+.&Identification;UploadSelect{position:relative;width:64px!important;height:22px!important;overflow:hidden}
+.&Identification;UploadButton{color:#3171c6;font-family:verdana;font-size:11px;height:22px!important;margin-left:0!important;margin-top:8px;}
+.&Identification;UploadInput{cursor:pointer;position:absolute;-moz-opacity:0;opacity:0;filter:alpha(opacity:0);top:0;right:0;padding:0}
+.&Identification;UploadLabel{color:#73A6DE;}">
+
+
+<!ENTITY MediaRequireScript "~/AppHandler/ExternalScript.ashx?t=j1&amp;v=1">
+<!ENTITY MediaRequireCss "~/AppHandler/ExternalCss.ashx?t=c1&amp;v=0">
+
+<!ENTITY MediaLockupField SYSTEM "..\Include\XML\MediaLookupFields.txt">
+<!ENTITY MediaLookupCommand SYSTEM "..\Include\Command\MediaLookupCommand.txt">
+<!ENTITY MediaLockupScript SYSTEM "..\Include\Javascript\MediaLookupScript.txt">
